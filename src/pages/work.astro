@@ -1,0 +1,222 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { portfolioItems, categories } from '../data/portfolio.js';
+---
+
+<BaseLayout title="Our Work - Evolve Web Solapur" description="Explore our portfolio of exceptional digital projects that showcase our expertise in web development and design.">
+  <Header />
+  
+  <main class="min-h-screen bg-white dark:bg-black pt-20">
+    <!-- Portfolio Header -->
+    <section class="relative py-20 sm:py-32 overflow-hidden">
+      <!-- Background Elements -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div class="w-full px-4 sm:px-6 lg:grid-system relative z-10">
+        <div class="text-center max-w-4xl mx-auto">
+          <!-- Premium Badge -->
+          <div class="inline-flex items-center gap-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-full px-6 py-3 border border-gray-200/50 dark:border-gray-700/50 shadow-lg mb-8">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="font-grotesk text-sm font-medium text-gray-700 dark:text-gray-300">Our Work</span>
+          </div>
+
+          <h1 class="font-grotesk text-5xl sm:text-6xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+            CRAFTING
+            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 mt-4">
+              BRAND STORIES 
+            </span>
+          </h1>
+          
+          <p class="font-sans text-xl sm:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl mx-auto">
+            From concept to completion, we craft digital solutions that make a difference.
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Portfolio Grid -->
+    <section class="py-8 sm:py-12">
+      <div class="w-full px-4 sm:px-12 lg:grid-system">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {portfolioItems.map((item) => (
+            <div 
+              class="portfolio-item group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
+              data-category={item.category.toLowerCase().replace(' ', '-')}
+            >
+              <!-- Image -->
+              <div class="relative overflow-hidden">
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  class="w-full h-48 sm:h-56 object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <div class="absolute top-4 right-4">
+                  <span class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-gray-900 dark:text-white text-xs font-medium px-2 py-1 rounded-full">
+                    {item.category}
+                  </span>
+                </div>
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+              </div>
+
+              <!-- Content -->
+              <div class="p-4 sm:p-6">
+                <h3 class="font-grotesk text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+                  {item.title}
+                </h3>
+                <p class="font-sans text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                  {item.description}
+                </p>
+
+                <!-- Features -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {item.features.slice(0, 3).map((feature) => (
+                    <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full">
+                      {feature}
+                    </span>
+                  ))}
+                  {item.features.length > 3 && (
+                    <span class="text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full">
+                      +{item.features.length - 3} more
+                    </span>
+                  )}
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+                  <div class="text-center">
+                    <div class="text-lg font-grotesk font-bold text-gray-900 dark:text-white">{item.stats.performance}</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400">Performance</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-lg font-grotesk font-bold text-gray-900 dark:text-white">{item.stats.loadTime}</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400">Load Time</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-lg font-grotesk font-bold text-gray-900 dark:text-white">
+                      {Object.values(item.stats)[2]}
+                    </div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 capitalize">
+                      {Object.keys(item.stats)[2].replace(/([A-Z])/g, ' $1').trim()}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CTA -->
+                <a 
+                  href={item.link}
+                  class="mt-6 w-full inline-flex items-center justify-center font-grotesk font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 group-hover:scale-105"
+                >
+                  Visit Website
+                  <span class="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 sm:py-20 bg-gray-200 text-black">
+      <div class="w-full px-4 sm:px-6 lg:grid-system">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 class="font-grotesk text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+            READY TO START YOUR PROJECT?
+          </h2>
+          <p class="font-sans text-lg sm:text-xl text-gray-700 mb-6 sm:mb-8 leading-relaxed">
+            Let's create something extraordinary together. Your vision, our expertise.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/contact" class="group inline-flex items-center justify-center font-grotesk font-medium bg-white text-gray-900 px-6 py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+              Start a Project
+              <span class="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+            <a href="/services" class="group inline-flex items-center justify-center font-grotesk font-medium border-2 border-gray-700 text-gray-900 px-6 py-4 rounded-lg hover:border-gray-600 hover:text-white transition-all duration-300">
+              Our Services
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <!-- Filter Script - No TypeScript Errors -->
+  <script>
+    // Wait for page to load
+    window.addEventListener('load', function() {
+      // Get all elements
+      const buttons = document.getElementsByClassName('filter-btn');
+      const items = document.getElementsByClassName('portfolio-item');
+      
+      // Make first button active
+      if (buttons[0]) {
+        buttons[0].classList.add('bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900');
+        buttons[0].classList.remove('bg-white', 'text-gray-700', 'dark:bg-gray-800', 'dark:text-gray-300');
+      }
+      
+      // Show all items initially
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i] as HTMLElement;
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      }
+      
+      // Add click handlers to buttons
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', () => {
+          const button = this as unknown as HTMLButtonElement;
+          const category = button.getAttribute('data-category');
+          
+          // Reset all buttons
+          for (let j = 0; j < buttons.length; j++) {
+            buttons[j].classList.remove('bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900');
+            buttons[j].classList.add('bg-white', 'text-gray-700', 'dark:bg-gray-800', 'dark:text-gray-300');
+          }
+          
+          // Set active button
+          button.classList.remove('bg-white', 'text-gray-700', 'dark:bg-gray-800', 'dark:text-gray-300');
+          button.classList.add('bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900');
+          
+          // Filter items
+          for (let k = 0; k < items.length; k++) {
+            const item = items[k] as HTMLElement;
+            const itemCategory = item.getAttribute('data-category');
+            
+            if (category === 'all' || itemCategory === category) {
+              // Show item
+              item.style.display = 'block';
+              setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+              }, 50);
+            } else {
+              // Hide item
+              item.style.opacity = '0';
+              item.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                item.style.display = 'none';
+              }, 300);
+            }
+          }
+        });
+      }
+    });
+  </script>
+
+  <style>
+    .portfolio-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+  </style>
+</BaseLayout>
